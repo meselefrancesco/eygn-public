@@ -7,6 +7,7 @@ Talks to `eygn-api` (Express + Prisma, separate repo) — see `.env.example` for
 `VITE_API_BASE_URL`. The API's full endpoint contract lives in that repo at
 `.claude/skills/eygn-api/references/api-contract.md`.
 
+
 ## Setup
 
     cp .env.example .env.local   # point VITE_API_BASE_URL at a running eygn-api, or leave the
