@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ChapterDto, listChapters } from '../lib/api';
 import { Globe, MapPin, Users, Compass, ExternalLink, ShieldCheck } from 'lucide-react';
+import { RemoteImage } from './RemoteImage';
 
 interface ChapterMapProps {
   onSelectChapter?: (chapter: ChapterDto) => void;
@@ -256,7 +257,7 @@ export const ChapterMap: React.FC<ChapterMapProps> = ({ onSelectChapter }) => {
                 </div>
 
                 {activeChapter.imageUrl && (
-                  <img
+                  <RemoteImage
                     src={activeChapter.imageUrl}
                     alt={activeChapter.city}
                     className="w-full h-28 object-cover rounded-lg mt-4 border border-white/10"

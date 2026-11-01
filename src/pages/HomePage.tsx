@@ -12,6 +12,7 @@ import { SITE_URL } from '../lib/siteConfig';
 import { MotionLink } from '../components/MotionLink';
 import { ArrowRight, Calendar, Sparkles, MapPin, ChevronRight, Globe, Shield, Ticket } from 'lucide-react';
 import { transitionSmooth, buttonHoverProps, viewportStandard } from '../utils/motion';
+import { RemoteImage } from '../components/RemoteImage';
 
 const ORGANIZATION_SCHEMA = {
   '@context': 'https://schema.org',
@@ -374,7 +375,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               className="bg-white rounded-2xl overflow-hidden border border-stone-200 hover:border-[#06592b] shadow-xs hover:shadow-sm transition-all flex flex-col justify-between"
             >
               {program.imageUrl && (
-                <img src={program.imageUrl} alt={program.title} className="w-full h-36 object-cover" />
+                <RemoteImage src={program.imageUrl} alt={program.title} className="w-full h-36 object-cover" />
               )}
               <div className="p-6 pb-0">
                 <div className="flex items-center justify-between text-xs mb-3">
@@ -467,7 +468,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               className="bg-white rounded-2xl overflow-hidden border border-stone-200 shadow-xs flex flex-col justify-between hover:border-[#f3a310] transition-colors"
             >
               {event.imageUrl && (
-                <img src={event.imageUrl} alt={event.title} className="w-full h-36 object-cover" />
+                <RemoteImage src={event.imageUrl} alt={event.title} className="w-full h-36 object-cover" />
               )}
               <div className="p-6 pb-0">
                 <div className="flex items-center justify-between text-xs text-stone-500 mb-3">
@@ -553,7 +554,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               className="bg-white rounded-2xl overflow-hidden border border-stone-200 shadow-xs flex flex-col justify-between hover:shadow-sm transition-all group"
             >
               {post.imageUrl && (
-                <img src={post.imageUrl} alt={post.title} className="w-full h-36 object-cover" />
+                <RemoteImage src={post.imageUrl} alt={post.title} className="w-full h-36 object-cover" />
               )}
               <div className="p-6 pb-0">
                 <div className="flex items-center gap-2 text-xs text-stone-500 mb-2">

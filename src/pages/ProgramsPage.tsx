@@ -9,6 +9,7 @@ import { SEO } from '../components/SEO';
 import { MotionLink } from '../components/MotionLink';
 import { CheckCircle2, Calendar, MapPin, Ticket, ArrowRight, BookOpen, ChevronRight } from 'lucide-react';
 import { transitionSmooth, buttonHoverProps } from '../utils/motion';
+import { RemoteImage } from '../components/RemoteImage';
 
 interface ProgramsPageProps {
   onRegisterEvent: (event: EventItem) => void;
@@ -170,7 +171,7 @@ export const ProgramsPage: React.FC<ProgramsPageProps> = ({
           >
             <div className="lg:col-span-8 space-y-6">
               {selectedProgram.imageUrl && (
-                <img
+                <RemoteImage
                   src={selectedProgram.imageUrl}
                   alt={selectedProgram.title}
                   className="w-full h-48 sm:h-64 object-cover rounded-2xl border border-stone-200"
@@ -312,7 +313,7 @@ export const ProgramsPage: React.FC<ProgramsPageProps> = ({
                 className="bg-white rounded-2xl overflow-hidden border border-stone-200 shadow-xs flex flex-col justify-between hover:border-[#06592b] transition-colors"
               >
                 {event.imageUrl && (
-                  <img
+                  <RemoteImage
                     src={event.imageUrl}
                     alt={event.title}
                     className="w-full h-36 object-cover"

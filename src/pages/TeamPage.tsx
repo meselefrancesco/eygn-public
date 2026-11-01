@@ -6,12 +6,25 @@ import { SEO } from '../components/SEO';
 import { MotionLink } from '../components/MotionLink';
 import { Mail, ArrowRight } from 'lucide-react';
 import { transitionSmooth, buttonHoverProps, viewportStandard } from '../utils/motion';
+import { RemoteImage } from '../components/RemoteImage';
 
 // API team members have no id/slug and no photo initials seed — derive both client-side.
 function getInitials(fullName: string): string {
   const parts = fullName.replace(/^(Mr|Ms|Mrs|Dr)\.?\s+/i, '').trim().split(/\s+/);
   return parts.slice(0, 2).map((p) => p[0]?.toUpperCase() ?? '').join('') || '??';
 }
+
+const largeMonogram = (name: string) => (
+  <div className="w-16 h-16 rounded-2xl bg-[#1a2805] text-[#f3a310] flex items-center justify-center font-bold text-2xl border border-[#f3a310]/40 shadow-xs shrink-0">
+    {getInitials(name)}
+  </div>
+);
+
+const smallMonogram = (name: string) => (
+  <div className="w-12 h-12 rounded-xl bg-[#06592b]/10 text-[#06592b] font-bold text-lg flex items-center justify-center shrink-0">
+    {getInitials(name)}
+  </div>
+);
 
 export const TeamPage: React.FC = () => {
   const [filterDepartment, setFilterDepartment] = useState<string>('All');
@@ -106,15 +119,14 @@ export const TeamPage: React.FC = () => {
                 <div className="flex items-start gap-4">
                   {/* Portrait photo if uploaded, else a monogram tile */}
                   {member.photoUrl ? (
-                    <img
+                    <RemoteImage
                       src={member.photoUrl}
                       alt={member.fullName}
                       className="w-16 h-16 rounded-2xl object-cover border border-[#f3a310]/40 shadow-xs shrink-0"
+                      fallback={largeMonogram(member.fullName)}
                     />
                   ) : (
-                    <div className="w-16 h-16 rounded-2xl bg-[#1a2805] text-[#f3a310] flex items-center justify-center font-bold text-2xl border border-[#f3a310]/40 shadow-xs shrink-0">
-                      {getInitials(member.fullName)}
-                    </div>
+                    largeMonogram(member.fullName)
                   )}
 
                   <div>
@@ -227,15 +239,14 @@ export const TeamPage: React.FC = () => {
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   {member.photoUrl ? (
-                    <img
+                    <RemoteImage
                       src={member.photoUrl}
                       alt={member.fullName}
                       className="w-12 h-12 rounded-xl object-cover shrink-0"
+                      fallback={smallMonogram(member.fullName)}
                     />
                   ) : (
-                    <div className="w-12 h-12 rounded-xl bg-[#06592b]/10 text-[#06592b] font-bold text-lg flex items-center justify-center shrink-0">
-                      {getInitials(member.fullName)}
-                    </div>
+                    smallMonogram(member.fullName)
                   )}
                   <div>
                     <h3 className="text-[17px] font-bold text-[#1a2805] leading-tight">

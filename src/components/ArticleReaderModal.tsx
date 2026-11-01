@@ -4,6 +4,7 @@ import { modalBackdropVariants, modalDialogVariants } from '../utils/motion';
 import { getPost, PostDetail } from '../lib/api';
 import { X, Calendar, MapPin, Clock, Share2, Check, ArrowLeft } from 'lucide-react';
 import { useModalA11y } from '../hooks/useModalA11y';
+import { RemoteImage } from './RemoteImage';
 
 interface ArticleReaderModalProps {
   slug: string | null;
@@ -140,7 +141,7 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({ slug, on
               </h1>
 
               {post.imageUrl && (
-                <img
+                <RemoteImage
                   src={post.imageUrl}
                   alt={post.title}
                   className="w-full h-48 sm:h-72 object-cover rounded-2xl mb-6"

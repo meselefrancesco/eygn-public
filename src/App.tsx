@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { cubicEase } from './utils/motion';
@@ -7,19 +7,20 @@ import { ROUTES, PRIVACY_ROUTE, NEWSLETTER_CONFIRM_ROUTE } from './lib/routes';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
-import { AboutPage } from './pages/AboutPage';
-import { ProgramsPage } from './pages/ProgramsPage';
-import { TeamPage } from './pages/TeamPage';
-import { MediaPage } from './pages/MediaPage';
-import { MembershipPage } from './pages/MembershipPage';
-import { ContactPage } from './pages/ContactPage';
-import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
-import { NewsletterConfirmPage } from './pages/NewsletterConfirmPage';
-import { NotFoundPage } from './pages/NotFoundPage';
 import { ArticleReaderModal } from './components/ArticleReaderModal';
 import { EventRegistrationModal } from './components/EventRegistrationModal';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
 import { initAnalytics, trackPageView } from './lib/analytics';
+
+const AboutPage = lazy(() => import('./pages/AboutPage').then((m) => ({ default: m.AboutPage })));
+const ProgramsPage = lazy(() => import('./pages/ProgramsPage').then((m) => ({ default: m.ProgramsPage })));
+const TeamPage = lazy(() => import('./pages/TeamPage').then((m) => ({ default: m.TeamPage })));
+const MediaPage = lazy(() => import('./pages/MediaPage').then((m) => ({ default: m.MediaPage })));
+const MembershipPage = lazy(() => import('./pages/MembershipPage').then((m) => ({ default: m.MembershipPage })));
+const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage').then((m) => ({ default: m.PrivacyPolicyPage })));
+const NewsletterConfirmPage = lazy(() => import('./pages/NewsletterConfirmPage').then((m) => ({ default: m.NewsletterConfirmPage })));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })));
 
 /** Scrolls to the top of the page on every route change (standard react-router pattern --
  * the browser doesn't do this on its own for client-side navigation). */
@@ -92,30 +93,32 @@ export default function App() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.35, ease: cubicEase }}
           >
-            <Routes location={location}>
-              <Route
-                path={ROUTES.home}
-                element={
-                  <HomePage
-                    language={language}
-                    onSelectPost={setSelectedPostSlug}
-                    onRegisterEvent={setSelectedEvent}
-                  />
-                }
-              />
-              <Route path={ROUTES.about} element={<AboutPage />} />
-              <Route
-                path={ROUTES.programs}
-                element={<ProgramsPage onRegisterEvent={setSelectedEvent} />}
-              />
-              <Route path={ROUTES.team} element={<TeamPage />} />
-              <Route path={ROUTES.media} element={<MediaPage onSelectPost={setSelectedPostSlug} />} />
-              <Route path={ROUTES.membership} element={<MembershipPage />} />
-              <Route path={ROUTES.contact} element={<ContactPage />} />
-              <Route path={PRIVACY_ROUTE} element={<PrivacyPolicyPage />} />
-              <Route path={NEWSLETTER_CONFIRM_ROUTE} element={<NewsletterConfirmPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+            <Suspense fallback={<div className="min-h-screen" />}>
+              <Routes location={location}>
+                <Route
+                  path={ROUTES.home}
+                  element={
+                    <HomePage
+                      language={language}
+                      onSelectPost={setSelectedPostSlug}
+                      onRegisterEvent={setSelectedEvent}
+                    />
+                  }
+                />
+                <Route path={ROUTES.about} element={<AboutPage />} />
+                <Route
+                  path={ROUTES.programs}
+                  element={<ProgramsPage onRegisterEvent={setSelectedEvent} />}
+                />
+                <Route path={ROUTES.team} element={<TeamPage />} />
+                <Route path={ROUTES.media} element={<MediaPage onSelectPost={setSelectedPostSlug} />} />
+                <Route path={ROUTES.membership} element={<MembershipPage />} />
+                <Route path={ROUTES.contact} element={<ContactPage />} />
+                <Route path={PRIVACY_ROUTE} element={<PrivacyPolicyPage />} />
+                <Route path={NEWSLETTER_CONFIRM_ROUTE} element={<NewsletterConfirmPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
           </motion.div>
         </AnimatePresence>
       </main>

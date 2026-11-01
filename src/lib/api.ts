@@ -209,7 +209,8 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   try {
     res = await fetch(`${API_BASE_URL}${path}`, {
       ...init,
-      headers: { 'Content-Type': 'application/json', ...init.headers },
+      // Only when there's a body: on a GET this header would force a CORS preflight per request.
+      headers: init.body ? { 'Content-Type': 'application/json', ...init.headers } : init.headers,
     });
   } catch {
     throw new ApiRequestError(0, {
