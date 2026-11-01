@@ -15,13 +15,13 @@ function getInitials(fullName: string): string {
 }
 
 const largeMonogram = (name: string) => (
-  <div className="w-16 h-16 rounded-2xl bg-[#1a2805] text-[#f3a310] flex items-center justify-center font-bold text-2xl border border-[#f3a310]/40 shadow-xs shrink-0">
+  <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-[#1a2805] text-[#f3a310] flex items-center justify-center font-bold text-3xl border border-[#f3a310]/40 shadow-xs shrink-0">
     {getInitials(name)}
   </div>
 );
 
 const smallMonogram = (name: string) => (
-  <div className="w-12 h-12 rounded-xl bg-[#06592b]/10 text-[#06592b] font-bold text-lg flex items-center justify-center shrink-0">
+  <div className="w-16 h-16 rounded-xl bg-[#06592b]/10 text-[#06592b] font-bold text-lg flex items-center justify-center shrink-0">
     {getInitials(name)}
   </div>
 );
@@ -116,13 +116,13 @@ export const TeamPage: React.FC = () => {
               className="bg-white rounded-3xl p-8 border border-stone-200 shadow-xs hover:border-[#06592b] transition-all flex flex-col justify-between"
             >
               <div className="space-y-4">
-                <div className="flex items-start gap-4">
+                <div className="flex flex-col sm:flex-row items-start gap-4">
                   {/* Portrait photo if uploaded, else a monogram tile */}
                   {member.photoUrl ? (
                     <RemoteImage
                       src={member.photoUrl}
                       alt={member.fullName}
-                      className="w-16 h-16 rounded-2xl object-cover border border-[#f3a310]/40 shadow-xs shrink-0"
+                      className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover object-[50%_20%] border border-[#f3a310]/40 shadow-xs shrink-0"
                       fallback={largeMonogram(member.fullName)}
                     />
                   ) : (
@@ -242,7 +242,7 @@ export const TeamPage: React.FC = () => {
                     <RemoteImage
                       src={member.photoUrl}
                       alt={member.fullName}
-                      className="w-12 h-12 rounded-xl object-cover shrink-0"
+                      className="w-16 h-16 rounded-xl object-cover object-[50%_20%] shrink-0"
                       fallback={smallMonogram(member.fullName)}
                     />
                   ) : (
